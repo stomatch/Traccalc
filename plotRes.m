@@ -6,7 +6,7 @@ plot(res(:,2),res(:,1));
 title('Зависимость v(S)');
 xlabel('S, км');
 ylabel('v, км/ч');
-max_y=max(res(:,4))+10;
+%max_y=max(res(:,4))+10;
 %ylim([0 max_y]);
 %xlim([0 10]);
 set(gca,'GridLineStyle','-');

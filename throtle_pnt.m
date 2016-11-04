@@ -13,7 +13,7 @@ function [ s ] = throtle_pnt(tx,pr,w,vn,vlim, sn,tn,sk )
 % tn - начальное время режима тяги
 % sk - конечная точка движения
 %% Глобальные переменные
-global traction
+%global traction
 global mp 
 global ml 
 global ksi 
@@ -98,14 +98,15 @@ end
 % движения поезда:
 %%
 % математическое ожидание
-Mv=vk-(quad(@(x) (SVCurve(cfr,x)-sc),vn,vk))/(SVCurve(cfr,vk)-sc);
+Mv=vk-(integral(@(x) (SVCurve(cfr,x)-sc),vn,vk))/(SVCurve(cfr,vk)-sc);
 %дисперсия
-Dv=(ksi./(SVCurve(cfr,vk)-sc)).*(quad(@(x) ((x-Mv).^2.*x./(cfr(1,1)+cfr(1,2).*x+cfr(1,3).*x.^2)),vn,vk));
+Dv=(ksi./(SVCurve(cfr,vk)-sc)).*(integral(@(x) ((x-Mv).^2.*x./(cfr(1,1)+cfr(1,2).*x+cfr(1,3).*x.^2)),vn,vk));
 % энергия на перемещение поезда
 A=2.725*10^(-3)*(ml+mp)*(cfr(1,1)+cfr(1,2)*Mv+cfr(1,3)*Mv^2+Dv*cfr(1,3))*(SVCurve(cfr,vk)-sc);
 dv=(vk-vn)/10;
 c=1;
 %% Результаты расчета на текущем интервале
+s=zeros(10);
 for i=vn:dv:vk
     s(c,1)=i; %скорость движения
     s(c,2)=SVCurve(cfr,i)-sc+sn; %координата пути

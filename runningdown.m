@@ -55,6 +55,7 @@ Dv=(ksi./(SVCurve(cfr,vk)-sc)).*(integral(@(x) ((x-Mv).^2.*x./(cfr(1,1)+cfr(1,2)
 %------------------
 dv=(vk-vn)/10;
 c=1;
+ss=zeros(10);
 for i=vn:dv:vk
     ss(c,1)=i; %скорость движения
     ss(c,2)=SVCurve(cfr,i)-sc+sn; %координата пути
